@@ -42,11 +42,11 @@ if (!validarToken()) {
     {
         $set = $_SESSION['setor'];
         $sql = "SELECT * FROM emails WHERE setor = 'Comercial Wesley' 
-        and ativo = 'Sim' ORDER BY nome ASC limit 13";
+        and ativo = 'Sim' ORDER BY nome ASC ";
     }
     if(empty($_SESSION['setor'])) {
         $sql = "SELECT * FROM emails WHERE setor = 'Comercial Wesley' 
-        and ativo = 'Sim' ORDER BY nome ASC limit 13";
+        and ativo = 'Sim' ORDER BY nome ASC ";
     }
 
     $result = $conexao->query($sql);
@@ -91,7 +91,7 @@ if (!validarToken()) {
             border: none;
             outline: none;
             background: transparent;
-            color: aliceblue;
+            
         }
     </style>
 </head>
@@ -156,7 +156,7 @@ if (!validarToken()) {
                       echo "<td>".$usuario_data['id']."</td>";
                       echo "<td>".$usuario_data['nome']."</td>";
                       echo "<td>".$usuario_data['email']."</td>";
-                      echo "<td>"."<button id='mostra'  onclick='CopiarSenha()'>".$ss."</button>"."</td>";
+                      echo "<td id='teste'>"."<button id='mostra'  onclick='CopiarSenha()'>".$ss."</button>"."</td>";
                       echo "<td>".$sop."</td>";
                       echo "<td>". $dataCorreta .$space . $hora ."</td>";
                       echo "<td>

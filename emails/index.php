@@ -43,7 +43,7 @@ if (!empty($_POST['submit'])) {
 
       // 7 days; 24 hours; 60 mins; 60secs
       // $duracao = time() + (7 * 24 * 60 * 60);
-      $duracao = time() + ( 5 * 60);
+      $duracao = time() + ( 30 * 60);
 
       $payload = [
 

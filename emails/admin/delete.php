@@ -12,9 +12,9 @@ $result = $conexao->query($sqlSelect);
 if($result->num_rows > 0)
 {
     //$sqlUpdate = "UPDATE emails SET ativo= 'SIM' WHERE id='$id'";
-    //$sqlUpdate = "DELETE FROM emails WHERE id = 131";
+    // $sqlUpdate = "DELETE FROM emails WHERE id = 133";
 
-    $sqlUpdate = "UPDATE emails SET ativo= 'Não' WHERE id='$id'";
+    $sqlUpdate = "UPDATE emails SET ativo= 'Não' WHERE id=$id";
     $resultUpdate = $conexao->query($sqlUpdate);
   }
  

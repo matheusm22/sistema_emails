@@ -33,11 +33,11 @@ if (!empty($_GET['search'])) {
 } else {
     $set = $_SESSION['setor'];
     $sql = "SELECT * FROM emails WHERE setor = 'Comercial Wesley' 
-        and ativo = 'Sim' ORDER BY nome ASC limit 13";
+        and ativo = 'Sim' ORDER BY nome ASC ";
 }
 if (empty($_SESSION['setor'])) {
     $sql = "SELECT * FROM emails WHERE setor = 'Comercial Wesley' 
-        and ativo = 'Sim' ORDER BY nome ASC limit 13";
+        and ativo = 'Sim' ORDER BY nome ASC ";
 }
 
 $result = $conexao->query($sql);
@@ -147,7 +147,7 @@ $result = $conexao->query($sql);
                     echo "<td>" . $user_data['email'] . "</td>";
                     echo "<td><input type='password' id='oculta-input' readonly value='$ss'></td>";
                     echo "<td><input type='password' id='oculta-input' readonly value='$sop'></td>";
-                    echo "<td>" . $dataCorreta . $space . $hora . "</td>";
+                    echo "<td>". $dataCorreta .$space . substr($hora, 0, 5) ."</td>";
                 }
 
                 ?>

@@ -43,11 +43,11 @@
     {
         $set = $_SESSION['setor'];
         $sql = "SELECT * FROM emails WHERE setor = 'Comercial Jaque' 
-        and ativo = 'Sim' ORDER BY nome ASC limit 13";
+        and ativo = 'Sim' ORDER BY nome ASC ";
     }
     if(empty($_SESSION['setor'])) {
         $sql = "SELECT * FROM emails WHERE setor = 'Comercial Jaque' 
-        and ativo = 'Sim' ORDER BY nome ASC limit 13";
+        and ativo = 'Sim' ORDER BY nome ASC ";
     }
 
     $result = $conexao->query($sql);
@@ -98,7 +98,7 @@
             border: none;
             outline: none;
             background: transparent;
-            color: aliceblue;
+            
         }
     </style>
 </head>

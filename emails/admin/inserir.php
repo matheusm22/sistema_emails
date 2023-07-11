@@ -9,7 +9,7 @@ $email = $_POST['email'];
 $senha = $_POST['senha'];
 $sophia = $_POST['sophia'];
 $setor = $_POST['setor'];
-$result = mysqli_query($conexao, "INSERT INTO emails(nome,email,senha,setor, ativo)
+$result = mysqli_query($conexao, "INSERT INTO emails(nome, email, senha, sophia, setor, ativo)
  VALUES ('$nome','$email','$senha','$sophia','$setor', 'Sim')"); // *** Sim significa o status de ativo*** 
 } 
 
@@ -48,7 +48,7 @@ $result = mysqli_query($conexao, "INSERT INTO emails(nome,email,senha,setor, ati
                 </div>
                 <br><br>
                 <div class="inputBox">
-                    <input type="text" name="sophia" id="sophia" class="inputUser" required>
+                    <input type="text" name="sophia" id="sophia" class="inputUser">
                     <label for="text" class="labelInput">sophia</label>
                 </div>
                 
