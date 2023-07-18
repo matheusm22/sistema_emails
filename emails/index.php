@@ -142,7 +142,7 @@ if (isset($_SESSION['msg'])) {
             ?>
             <div class="form-outline mb-4">
               <label>Usuário: </label><br>
-              <input type="text" name="usuario" id="txtu" class="form-control  w-75" placeholder="Digite o usuário" value="<?php echo $user; ?>">
+              <input type="text" name="usuario" id="txtu" autofocus class="form-control  w-75" placeholder="Digite o usuário" value="<?php echo $user; ?>">
             </div>
             <?php
             $password = "";
