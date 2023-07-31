@@ -34,7 +34,7 @@ if (($_SESSION['setor'] != 'adm')) {
         $sql = "SELECT * FROM emails WHERE  id = '$data' or nome LIKE '%$data%'
          or setor LIKE '%$data%' or ativo LIKE '%$data%' ORDER BY nome ASC";
     } else {
-        $sql = "SELECT * FROM emails  ORDER BY nome ASC ";
+        $sql = "SELECT * FROM emails  where ativo ='Sim' ORDER BY nome ASC ";
     }
 }
 $result = $conexao->query($sql);
@@ -76,19 +76,20 @@ $result = $conexao->query($sql);
         .d-flex {
             padding-right: 10px;
         }
+
         #oculta-input {
             border: none;
             outline: none;
             background-color: transparent;
             color: aliceblue;
-            width: 60px;
+            width: 90px;
         }
 
 
         .copiar {
             border: none;
             outline: none;
-            background: transparent;  
+            background: transparent;
             color: aliceblue;
 
         }
@@ -170,9 +171,9 @@ $result = $conexao->query($sql);
                     echo "<tr>";
                     echo "<td>" . $user_data['id'] . "</td>";
                     echo "<td>" . $user_data['nome'] . "</td>";
-                    echo "<td>" . "<button id='email' class='copiar' onclick='CopiarEmail()'>" . $user_data['email'] . "</button>" . "</td>";
-                    echo "<td>".$ss."</td>";
-                    echo "<td>".$sop."</td>";
+                    echo "<td>"."<button id='email' class='copiar' onclick='CopiarEmail()'>".$user_data['email']."</button>"."</td>";
+                      echo "<td>"."<button id='senha' class='copiar' onclick='CopiarSenha()'>".$ss."</button>"."</td>";
+                      echo "<td>"."<button id='sophia' class='copiar' onclick='CopiarSophia()'>".$sop."</button>"."</td>";
                     echo "<td>" . $user_data['setor'] . "</td>";
                     echo "<td>" . $user_data['ativo'] . "</td>";
                     echo "<td>" . $data_atualiza . $space . substr($hora1, 0, 5) . "</td>";
@@ -207,17 +208,13 @@ $result = $conexao->query($sql);
             searchData();
         }
     });
-
-    function deletar() {
-        alert('Registro removido com sucesso');
-    }
-
+    
     function CopiarEmail() {
 
         var range = document.createRange();
         range.selectNode(document.getElementById('email')); //changed here
         window.getSelection().removeAllRanges();
-        window.getSelection().addRanges(range);
+        window.getSelection().addRange(range);
         document.execCommand("copy");
         window.getSelection().removeAllRanges();
         alert('E-mail copiado!');
@@ -229,7 +226,7 @@ $result = $conexao->query($sql);
         var range = document.createRange();
         range.selectNode(document.getElementById('senha')); //changed here
         window.getSelection().removeAllRanges();
-        window.getSelection().addRanges(range);
+        window.getSelection().addRange(range);
         document.execCommand("copy");
         window.getSelection().removeAllRanges();
         alert('Senha copiada!');
@@ -241,7 +238,7 @@ $result = $conexao->query($sql);
         var range = document.createRange();
         range.selectNode(document.getElementById('sophia')); //changed here
         window.getSelection().removeAllRanges();
-        window.getSelection().addRanges(range);
+        window.getSelection().addRange(range);
         document.execCommand("copy");
         window.getSelection().removeAllRanges();
         alert('Senha copiada!');
