@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 // Função para validar o token
 function validarToken(){
     // Recuperar o token do cookie

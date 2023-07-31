@@ -1,5 +1,8 @@
 <?php
+if (isset($_SESSION)){
     session_start();
+
+}
     include_once('config.php');
 
 // Incluir o arquivo para validar e recuperar dados do token
@@ -17,37 +20,44 @@ if (!validarToken()) {
     exit();
 }
 
-    echo "<script>setTimeout(function() {
-        window.location.href = '/emails/lista.php';
-    }, 4500); </script>";
+if ($_SESSION['setor'] == 'Comercial Wesley') {
 
-     //print_r($_SESSION);
-    if((!isset($_SESSION['usuario']) == true) and (!isset($_SESSION['senha']) == true) )
-    {
-        unset($_SESSION['usuario']);
-        unset($_SESSION['senha']);
-        unset($_SESSION['setor']);
-
-        header('Location: index.php');
-    }
-    $logado = $_SESSION['usuario'];
-    if(!empty($_GET['search']))
-    {
+    if (!empty($_GET['search'])) {
         $data = $_GET['search'];
-        $sql = "SELECT * FROM emails WHERE (id ='$data' or nome LIKE '%$data%') 
-        and setor = 'Comercial Wesley' and ativo = 'Sim' ORDER BY nome ASC";
-       
-    }
-    else
-    {
+        $sql = "SELECT * FROM emails WHERE (id ='$data' or nome LIKE '%$data%')
+             and setor = 'Comercial Wesley' and ativo = 'Sim' ORDER BY nome ASC";
+    } else {
         $set = $_SESSION['setor'];
-        $sql = "SELECT * FROM emails WHERE setor = 'Comercial Wesley' 
-        and ativo = 'Sim' ORDER BY nome ASC ";
+        $sql = "SELECT * FROM emails WHERE setor = '$set' 
+            and ativo = 'Sim' ORDER BY nome ASC ";
     }
-    if(empty($_SESSION['setor'])) {
+    if (empty($_SESSION['setor'])) {
         $sql = "SELECT * FROM emails WHERE setor = 'Comercial Wesley' 
-        and ativo = 'Sim' ORDER BY nome ASC ";
+            and ativo = 'Sim' ORDER BY nome ASC ";
     }
+
+    } else if ($_SESSION['setor'] == 'Comercial Jaque'){
+    
+        if(!empty($_GET['search']))
+        {
+            $data = $_GET['search'];
+            $sql = "SELECT * FROM emails WHERE (id ='$data' or nome LIKE '%$data%') 
+            and setor = 'Comercial Jaque' and ativo = 'Sim' ORDER BY nome ASC";
+           
+        }
+        else
+        {
+            $set = $_SESSION['setor'];
+            $sql = "SELECT * FROM emails WHERE setor = '$set' 
+            and ativo = 'Sim' ORDER BY nome ASC ";
+        }
+        if(empty($_SESSION['setor'])) {
+            $sql = "SELECT * FROM emails WHERE setor = 'Comercial Jaque' 
+            and ativo = 'Sim' ORDER BY nome ASC ";
+        }
+    
+    }
+    // $logado = $_SESSION['usuario'];
 
     $result = $conexao->query($sql);
 ?>
@@ -74,7 +84,7 @@ if (!validarToken()) {
         }
         
         .table-bg{
-            background-image: linear-gradient(to right,#E70808 30%,#E78608, #E1D209);
+            background-image: linear-gradient(to right,  #008e9d 40%,  #4bbc42 );
             border-radius: 15px 15px 15px 15px;
         }
         .box-search{
@@ -87,12 +97,17 @@ if (!validarToken()) {
             padding-right: 20px;
         }
         
-        #mostra {
+        
+        .copiar {
             border: none;
             outline: none;
-            background: transparent;
-            
+            background: transparent;  
+            color: aliceblue;
+
         }
+
+       
+        
     </style>
 </head>
 <body>
@@ -100,10 +115,13 @@ if (!validarToken()) {
     <br>
    <div class="d-flex">
     <a href="sair.php" class="btn btn-danger me-2">Sair</a>
+    &nbsp; &nbsp;
+    <a href="/emails/lista.php" class="btn btn-success">Voltar</a> 
    </div>
+   
    <div class="box-search">
         <input type="search" class="form-control w-25" placeholder="Pesquisar" id="pesquisar">
-        <button onclick="searchData()" class="btn btn-primary">
+        <button onclick="searchData()" class="btn btn-success">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
             </svg>
@@ -116,14 +134,9 @@ if (!validarToken()) {
                     <th scope="col">#</th>
                     <th scope="col">Nome</th>
                     <th scope="col">E-mail</th>
-                    <th scope="col">Senha></th>
+                    <th scope="col">Senha</th>
                     <th scope="col">Sophia</th>
                     <th scope="col">Data da Criação</th>
-                   
-                 
-                    
-                    
-
                 </tr>
             </thead>
             <tbody>
@@ -131,20 +144,20 @@ if (!validarToken()) {
 
             if($result->num_rows == 0)
             {
-                echo '<td colspan="6">';
+                echo '<td colspan="12">';
                 echo "Nenhum registro encontrado, tente novamente!!!</td>";
             }  
-                    while($usuario_data = mysqli_fetch_assoc($result)) {
+                    while($user_data = mysqli_fetch_assoc($result)) {
                         // Separa as duas partes em um array, explode separada em um array toda vez que encontrar a ocorrencia, no caso ali espaço
-                        $data = explode(' ', $usuario_data['dta_criacao']); 
+                        $data = explode(' ', $user_data['dta_criacao']); 
                           
                         $hora = $data[1]; 
                         //Espaço na hora de imprimir
                         $space = ' '; 
 
-                        $fechado = '********';
-                        $ss = $usuario_data['senha'];
-                        $sop = $usuario_data['sophia'];
+                        
+                        $ss = $user_data['senha'];
+                        $sop = $user_data['sophia'];
                         
                         //'2023-05-26'  Transforma a data em um array também 
                         $dataCorreta = explode('-',  $data[0]);
@@ -153,12 +166,12 @@ if (!validarToken()) {
                         // Junta o array com o delimitador / para uma string 
                         $dataCorreta = implode('/', $dataCorreta); 
                       echo "<tr>";
-                      echo "<td>".$usuario_data['id']."</td>";
-                      echo "<td>".$usuario_data['nome']."</td>";
-                      echo "<td>".$usuario_data['email']."</td>";
-                      echo "<td id='teste'>"."<button id='mostra'  onclick='CopiarSenha()'>".$ss."</button>"."</td>";
-                      echo "<td>".$sop."</td>";
-                      echo "<td>". $dataCorreta .$space . $hora ."</td>";
+                      echo "<td>".$user_data['id']."</td>";
+                      echo "<td>".$user_data['nome']."</td>";
+                      echo "<td>"."<button id='email' class='copiar' onclick='CopiarEmail()'>".$user_data['email']."</button>"."</td>";
+                      echo "<td>"."<button id='senha' class='copiar' onclick='CopiarSenha()'>".$ss."</button>"."</td>";
+                      echo "<td>"."<button id='sophia' class='copiar' onclick='CopiarSophia()'>".$sop."</button>"."</td>";
+                      echo "<td>". $dataCorreta .$space . substr($hora, 0, 5) ."</td>";
                       echo "<td>
                       
                     </td>";          
@@ -186,13 +199,33 @@ if (!validarToken()) {
 
     function CopiarSenha() {
         var range = document.createRange();
-        range.selectNode(document.getElementById('mostra')); //changed here
+        range.selectNode(document.getElementById('senha')); //changed here
         window.getSelection().removeAllRanges();
         window.getSelection().addRange(range);
         document.execCommand("copy");
         window.getSelection().removeAllRanges();
-        alert('Senha copiada');        
+        alert('Senha copiada!');        
     }
 
+
+    function CopiarEmail() {
+        var range = document.createRange();
+        range.selectNode(document.getElementById('email')); //changed here
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+        document.execCommand("copy");
+        window.getSelection().removeAllRanges();
+        alert('E-mail copiado!');        
+    }
+
+    function CopiarSophia() {
+        var range = document.createRange();
+        range.selectNode(document.getElementById('sophia')); //changed here
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+        document.execCommand("copy");
+        window.getSelection().removeAllRanges();
+        alert('Senha copiada!');        
+    }
 </script>
 </html>

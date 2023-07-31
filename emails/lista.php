@@ -1,8 +1,10 @@
 <?php
 
 // SESSÃO RESPONSÁVEL PELO LOGIN
-session_start();
+if(isset($_SESSION)) {
 
+session_start();
+}
 // Limpara o buffer de redirecionamento
 ob_start();
 
@@ -26,20 +28,43 @@ if (!validarToken()) {
 //print_r($_SESSION);
 
 // $logado = $_SESSION['user'];
+
+if ($_SESSION['setor'] == 'Comercial Wesley') {
+
 if (!empty($_GET['search'])) {
     $data = $_GET['search'];
     $sql = "SELECT * FROM emails WHERE (id ='$data' or nome LIKE '%$data%')
          and setor = 'Comercial Wesley' and ativo = 'Sim' ORDER BY nome ASC";
 } else {
     $set = $_SESSION['setor'];
-    $sql = "SELECT * FROM emails WHERE setor = 'Comercial Wesley' 
+    $sql = "SELECT * FROM emails WHERE setor = '$set' 
         and ativo = 'Sim' ORDER BY nome ASC ";
 }
 if (empty($_SESSION['setor'])) {
     $sql = "SELECT * FROM emails WHERE setor = 'Comercial Wesley' 
         and ativo = 'Sim' ORDER BY nome ASC ";
-}
+    }
+} else if ($_SESSION['setor'] == 'Comercial Jaque'){
 
+    if(!empty($_GET['search']))
+    {
+        $data = $_GET['search'];
+        $sql = "SELECT * FROM emails WHERE (id ='$data' or nome LIKE '%$data%') 
+        and setor = 'Comercial Jaque' and ativo = 'Sim' ORDER BY nome ASC";
+       
+    }
+    else
+    {
+        $set = $_SESSION['setor'];
+        $sql = "SELECT * FROM emails WHERE setor = '$set' 
+        and ativo = 'Sim' ORDER BY nome ASC ";
+    }
+    if(empty($_SESSION['setor'])) {
+        $sql = "SELECT * FROM emails WHERE setor = 'Comercial Jaque' 
+        and ativo = 'Sim' ORDER BY nome ASC ";
+    }
+
+}
 $result = $conexao->query($sql);
 ?>
 <!DOCTYPE html>
@@ -66,7 +91,7 @@ $result = $conexao->query($sql);
         }
 
         .table-bg {
-            background-image: linear-gradient(to right, #E70808 30%, #E78608, #E1D209);
+            background-image: linear-gradient(to right,  #008e9d 40%,  #4bbc42 );
             border-radius: 15px 15px 15px 15px;
         }
 
@@ -78,13 +103,23 @@ $result = $conexao->query($sql);
 
         .d-flex {
             padding-right: 20px;
+            
         }
 
         #oculta-input {
             border: none;
             outline: none;
             background-color: transparent;
+            color: aliceblue;
             width: 60px;
+        }
+
+        .copiar {
+            border: none;
+            outline: none;
+            background: transparent;  
+            color: aliceblue;
+
         }
     </style>
 </head>
@@ -93,11 +128,11 @@ $result = $conexao->query($sql);
     </nav>
     <br>
     <div class="d-flex">
-        <a href="sair.php" class="btn btn-danger  me-2">Sair</a>
+        <a href="sair.php" class="btn btn-lg btn-danger  me-2">Sair</a>
     </div>
     <div class="box-search">
         <input type="search" class="form-control w-25" placeholder="Pesquisar" id="pesquisar">
-        <button onclick="searchData()" class="btn btn-danger">
+        <button onclick="searchData()" class="btn btn-success">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
             </svg>
@@ -120,7 +155,7 @@ $result = $conexao->query($sql);
                 <?php
 
                 if ($result->num_rows == 0) {
-                    echo '<td colspan="6">';
+                    echo '<td colspan="12">';
                     echo "Nenhum registro encontrado, tente novamente!!!</td>";
                 }
                 while ($user_data = mysqli_fetch_assoc($result)) {
@@ -131,7 +166,6 @@ $result = $conexao->query($sql);
                     //Espaço na hora de imprimir
                     $space = ' ';
 
-                    $fechado = '********';
                     $ss = $user_data['senha'];
                     $sop = $user_data['sophia'];
 
@@ -142,9 +176,9 @@ $result = $conexao->query($sql);
                     // Junta o array com o delimitador / para uma string 
                     $dataCorreta = implode('/', $dataCorreta);
                     echo "<tr>";
-                    echo "<td id='' >" . $user_data['id'] . "</td>";
+                    echo "<td>" . $user_data['id'] . "</td>";
                     echo "<td>" . $user_data['nome'] . "</td>";
-                    echo "<td>" . $user_data['email'] . "</td>";
+                    echo "<td>"."<button id='email' class='copiar' onclick='CopiarEmail()'>".$user_data['email']."</button>"."</td>";
                     echo "<td><input type='password' id='oculta-input' readonly value='$ss'></td>";
                     echo "<td><input type='password' id='oculta-input' readonly value='$sop'></td>";
                     echo "<td>". $dataCorreta .$space . substr($hora, 0, 5) ."</td>";
@@ -170,6 +204,18 @@ $result = $conexao->query($sql);
 
     function searchData() {
         window.location = 'visualiza.php?search=' + search.value;
+    }
+
+    function CopiarEmail() {
+
+        var range = document.createRange();
+        range.selectNode(document.getElementById('email')); //changed here
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+        document.execCommand("copy");
+        window.getSelection().removeAllRanges();
+        alert('E-mail copiado!');      
+
     }
 </script>
 

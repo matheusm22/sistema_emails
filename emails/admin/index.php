@@ -9,7 +9,7 @@ ob_start();
 include_once('config.php');
 
 // Incluir o arquivo para validar e recuperar dados do token
-include_once ('validar_token.php');
+include_once('validar_token.php');
 
 // Chamar a função validar o token, se a função retornar FALSE significa que o token é inválido e acessa o IF
 if (!validarToken()) {
@@ -24,27 +24,24 @@ if (!validarToken()) {
 }
 
 
-    if (($_SESSION['setor'] != 'adm')) {
-        session_destroy();
-        header('Location:/emails/index.php');
-   
+if (($_SESSION['setor'] != 'adm')) {
+    session_destroy();
+    header('Location:/emails/index.php');
 } else {
-   
-    if(!empty($_GET['search']))
-    {
+
+    if (!empty($_GET['search'])) {
         $data = $_GET['search'];
         $sql = "SELECT * FROM emails WHERE  id = '$data' or nome LIKE '%$data%'
          or setor LIKE '%$data%' or ativo LIKE '%$data%' ORDER BY nome ASC";
-    }
-    else
-    {
+    } else {
         $sql = "SELECT * FROM emails  ORDER BY nome ASC ";
     }
 }
-    $result = $conexao->query($sql);
+$result = $conexao->query($sql);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -53,46 +50,65 @@ if (!validarToken()) {
     <link rel="shortcut icon" href="download.ico" type="image/x-icon">
     <title>ECONET - ADM</title>
     <style>
-        body{
-            background-image:url(fundo_econet.png);
-            background-position:0px -50px;
-            background-size:cover;
+        body {
+            background-image: url(fundo_econet.png);
+            background-position: 0px -50px;
+            background-size: cover;
             color: white;
             text-align: center;
         }
 
-        table td{
-               border:none !important;
+        table td {
+            border: none !important;
         }
-        .table-bg{ 
-           background-image: linear-gradient(to right, #D51037  15%, #E34E6C ,  #F074B6 );
+
+        .table-bg {
+            background-image: linear-gradient(to right, #D51037 15%, #E34E6C, #F074B6);
             border-radius: 15px 15px 15px 15px;
         }
-        .box-search{
+
+        .box-search {
             display: flex;
             justify-content: center;
             gap: .1%;
         }
-        .d-flex{
-            padding-right: 20px;
+
+        .d-flex {
+            padding-right: 10px;
+        }
+        #oculta-input {
+            border: none;
+            outline: none;
+            background-color: transparent;
+            color: aliceblue;
+            width: 60px;
+        }
+
+
+        .copiar {
+            border: none;
+            outline: none;
+            background: transparent;  
+            color: aliceblue;
+
         }
     </style>
 </head>
+
 <body>
     </nav>
-    <br> 
+    <br>
     <br>
     <div class="d-flex">
-    <a href="sair.php" class="btn btn-danger  me-2">Sair</a> &nbsp; &nbsp;
-    <a href="/emails/lista.php" class="btn btn-warning">Painel W</a> &nbsp;&nbsp;
-   <a href="/emails/lista2.php" class="btn btn-success">Painel J</a>
-   </div>
-   
+        <a href="sair.php" class="btn btn-lg btn-danger  me-2">Sair</a> &nbsp; &nbsp;
+        <a href="inserir.php" class="btn btn-lg btn-info">Adicionar</a>
+    </div>
+
     <div class="box-search">
         <input type="search" class="form-control w-25" placeholder="Pesquisar" id="pesquisar">
         <button onclick="searchData()" class="btn btn-primary">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
             </svg>
         </button>
     </div>
@@ -115,51 +131,53 @@ if (!validarToken()) {
             <tbody>
                 <?php
 
-                    if($result->num_rows == 0)
-                    {
-                        echo '<td colspan="8">';
-                        echo "Nenhum registro encontrado, tente novamente!!!</td>";
-                    }  
+                if ($result->num_rows == 0) {
+                    echo '<td colspan="12">';
+                    echo "Nenhum registro encontrado, tente novamente!!!</td>";
+                }
 
-                    while($user_data = mysqli_fetch_assoc($result)) {
+                while ($user_data = mysqli_fetch_assoc($result)) {
 
-                        $data_atua = explode(' ', $user_data['dta_atualizacao']); 
-                          
-                        $hora1 = $data_atua[1]; 
-                        //Espaço na hora de imprimir
-                        $space = ' '; 
-                        
-                        //'2023-05-26'  Transforma a data em um array também 
-                        $data_atualiza = explode('-',  $data_atua[0]);
-                        //Inverte o array que está [2023,05,26] para [26,05,2023] 
-                        $data_atualiza = array_reverse($data_atualiza); 
-                        // Junta o array com o delimitador / para uma string 
-                        $data_atualiza = implode('/', $data_atualiza);
+                    $ss = $user_data['senha'];
+                    $sop = $user_data['sophia'];
 
-                         // Separa as duas partes em um array, explode separada em um array toda vez que encontrar a ocorrencia, no caso ali espaço
-                          $data = explode(' ', $user_data['dta_criacao']); 
-                          
-                          $hora = $data[1]; 
-                          //Espaço na hora de imprimir
-                          $space = ' '; 
-                          
-                          //'2023-05-26'  Transforma a data em um array também 
-                          $data_criacao = explode('-',  $data[0]);
-                          //Inverte o array que está [2023,05,26] para [26,05,2023] 
-                          $data_criacao = array_reverse($data_criacao); 
-                          // Junta o array com o delimitador / para uma string 
-                          $data_criacao = implode('/', $data_criacao); 
-                        echo "<tr>";
-                        echo "<td>".$user_data['id']."</td>";
-                        echo "<td>".$user_data['nome']."</td>";
-                        echo "<td>".$user_data['email']."</td>";
-                        echo "<td>".$user_data['senha']."</td>";
-                        echo "<td>".$user_data['sophia']."</td>";
-                        echo "<td>".$user_data['setor']."</td>";
-                        echo "<td>".$user_data['ativo']."</td>";
-                        echo "<td>". $data_atualiza .$space . substr($hora1, 0, 5) ."</td>";
-                        echo "<td>". $data_criacao .$space . substr($hora, 0, 5) ."</td>";
-                        echo "<td>
+                    $data_atua = explode(' ', $user_data['dta_atualizacao']);
+
+                    $hora1 = $data_atua[1];
+                    //Espaço na hora de imprimir
+                    $space = ' ';
+
+                    //'2023-05-26'  Transforma a data em um array também 
+                    $data_atualiza = explode('-',  $data_atua[0]);
+                    //Inverte o array que está [2023,05,26] para [26,05,2023] 
+                    $data_atualiza = array_reverse($data_atualiza);
+                    // Junta o array com o delimitador / para uma string 
+                    $data_atualiza = implode('/', $data_atualiza);
+
+                    // Separa as duas partes em um array, explode separada em um array toda vez que encontrar a ocorrencia, no caso ali espaço
+                    $data = explode(' ', $user_data['dta_criacao']);
+
+                    $hora = $data[1];
+                    //Espaço na hora de imprimir
+                    $space = ' ';
+
+                    //'2023-05-26'  Transforma a data em um array também 
+                    $data_criacao = explode('-',  $data[0]);
+                    //Inverte o array que está [2023,05,26] para [26,05,2023] 
+                    $data_criacao = array_reverse($data_criacao);
+                    // Junta o array com o delimitador / para uma string 
+                    $data_criacao = implode('/', $data_criacao);
+                    echo "<tr>";
+                    echo "<td>" . $user_data['id'] . "</td>";
+                    echo "<td>" . $user_data['nome'] . "</td>";
+                    echo "<td>" . "<button id='email' class='copiar' onclick='CopiarEmail()'>" . $user_data['email'] . "</button>" . "</td>";
+                    echo "<td>".$ss."</td>";
+                    echo "<td>".$sop."</td>";
+                    echo "<td>" . $user_data['setor'] . "</td>";
+                    echo "<td>" . $user_data['ativo'] . "</td>";
+                    echo "<td>" . $data_atualiza . $space . substr($hora1, 0, 5) . "</td>";
+                    echo "<td>" . $data_criacao . $space . substr($hora, 0, 5) . "</td>";
+                    echo "<td>
                         <a class='btn btn-info' href='edita.php?id=$user_data[id]'>
                         <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-pencil' viewBox='0 0 16 16'>
                         <path d='M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z'/>
@@ -170,32 +188,65 @@ if (!validarToken()) {
   <path d='M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z'/>
 </svg>
 </a>
-                       </td>";          
-             }
-             ?>
+                       </td>";
+                }
+                ?>
             </tbody>
         </table>
     </div>
 </body>
 <script>
     var search = document.getElementById('pesquisar');
-     function searchData()
-     {
-        window.location ='index.php?search='+search.value;
-     }         
+
+    function searchData() {
+        window.location = 'index.php?search=' + search.value;
+    }
 
     search.addEventListener("keydown", function(event) {
-        if (event.key === "Enter") 
-        {
+        if (event.key === "Enter") {
             searchData();
         }
     });
 
-    function deletar () {     
-          alert('Registro removido com sucesso');
-        }
+    function deletar() {
+        alert('Registro removido com sucesso');
+    }
 
-    
+    function CopiarEmail() {
 
+        var range = document.createRange();
+        range.selectNode(document.getElementById('email')); //changed here
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRanges(range);
+        document.execCommand("copy");
+        window.getSelection().removeAllRanges();
+        alert('E-mail copiado!');
+
+    }
+
+    function CopiarSenha() {
+
+        var range = document.createRange();
+        range.selectNode(document.getElementById('senha')); //changed here
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRanges(range);
+        document.execCommand("copy");
+        window.getSelection().removeAllRanges();
+        alert('Senha copiada!');
+
+    }
+
+    function CopiarSophia() {
+
+        var range = document.createRange();
+        range.selectNode(document.getElementById('sophia')); //changed here
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRanges(range);
+        document.execCommand("copy");
+        window.getSelection().removeAllRanges();
+        alert('Senha copiada!');
+
+    }
 </script>
+
 </html>

@@ -77,7 +77,7 @@ if (!empty($_POST['submit'])) {
          break;  
       
           case 'Comercial Jaque':
-        header('Location: lista2.php');
+        header('Location: lista.php');
          break; 
          
          default: 

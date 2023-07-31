@@ -27,7 +27,7 @@ if (isset($_POST['usuario']) || isset($_POST['senha']) || isset($_POST['matricul
              
               echo "<label style='color: #f00;'>Erro: Número de matricula em uso, Tente outro!</label>";
        } else {
-    
+        
         $verifica_usuario = mysqli_query($conexao, "SELECT usuario FROM acessos
          WHERE usuario = '$usuario' ORDER BY id ASC");
 
