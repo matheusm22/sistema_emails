@@ -46,7 +46,6 @@ if (isset($_POST['update']))
           }, 2000);</script>";
 
      }
-    
 
 
 ?>
@@ -61,7 +60,9 @@ if (isset($_POST['update']))
     <style>
         #volta {
             color:white;
-            font-size: 20px;
+            font-size: 23px;
+            text-decoration:  none;
+
         }
 
         #update{
@@ -95,6 +96,7 @@ if (isset($_POST['update']))
     <title>Econet - Editar Registros</title>
 </head>
 <body>
+    <a href="index.php" id="volta">Voltar</a>
      <div class="caixa">
         <form action="edita.php" method="post">
             <fieldset>

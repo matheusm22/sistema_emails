@@ -151,10 +151,7 @@ if ($_SESSION['setor'] == 'Comercial Wesley') {
                         // Separa as duas partes em um array, explode separada em um array toda vez que encontrar a ocorrencia, no caso ali espaço
                         $data = explode(' ', $user_data['dta_criacao']); 
                           
-                        $hora = $data[1]; 
-                        //Espaço na hora de imprimir
-                        $space = ' '; 
-
+                        $hora = $data[1];
                         
                         $ss = $user_data['senha'];
                         $sop = $user_data['sophia'];
@@ -171,7 +168,7 @@ if ($_SESSION['setor'] == 'Comercial Wesley') {
                       echo "<td>"."<button id='email' class='copiar' onclick='CopiarEmail()'>".$user_data['email']."</button>"."</td>";
                       echo "<td>"."<button id='senha' class='copiar' onclick='CopiarSenha()'>".$ss."</button>"."</td>";
                       echo "<td>"."<button id='sophia' class='copiar' onclick='CopiarSophia()'>".$sop."</button>"."</td>";
-                      echo "<td>". $dataCorreta .$space . substr($hora, 0, 5) ."</td>";
+                      echo "<td>". $dataCorreta . " - " . substr($hora, 0, 5) ."</td>";
                       echo "<td>
                       
                     </td>";          

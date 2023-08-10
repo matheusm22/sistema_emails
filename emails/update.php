@@ -70,10 +70,10 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css
     ">
-    <link rel="stylesheet" href="/meet/css/senha.css">
-    <link rel="shortcut icon" href="/meet/css/download.ico" type="image/x-icon">
+    <link rel="stylesheet" href="senha.css">
+    <link rel="shortcut icon" href="download.ico" type="image/x-icon">
     
-    <title>Link Meet - ECONET</title>
+    <title>Registros - ECONET</title>
 </head>
 
 <body>

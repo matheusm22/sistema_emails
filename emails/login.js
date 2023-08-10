@@ -1,10 +1,13 @@
 "use strict";
 
+
+
 // não adiciona o espaço no campo usuário
 
 $(function () {
   $("#txtu").keypress(function (event) {
     if (event.which == 32) {
+      alert('Não adicione espaços!') 
       return false;
     }
   });
@@ -15,6 +18,18 @@ $(function () {
 
 $(function () {
   $("#txts").keypress(function (event) {
+    if (event.which == 32) {
+      alert('Não adicione espaços!') 
+      return false;
+    }
+  });
+
+});
+
+
+// não adiciona o espaço no campo matricula
+$(function () {
+  $("#matricula").keypress(function (event) {
     if (event.which == 32) {
       return false;
     }

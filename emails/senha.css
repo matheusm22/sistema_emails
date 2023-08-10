@@ -1,0 +1,77 @@
+body {
+    overflow: hidden;
+    position: relative;
+    left: 700px;
+    top: 100px;
+    margin: 0 auto;
+    background-repeat: no-repeat;
+    background-size: 100vw 100vh;
+    background: linear-gradient(to right, #FF4B2B , #FF416C 60%);
+}
+
+label {
+    color:#FF416C;
+
+}
+
+
+#mostrar {
+    margin-left: 5px;
+    position: relative;
+    bottom: 120px;
+    right: 415px;
+    width: 30px;
+    height: 30px;
+
+}
+
+h1 {
+    color:#FF416C;
+}
+
+#alterar {
+
+    border-radius: 20px;
+    border: 1px solid #FF416C;
+    background-color: #FF416C;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: bold;
+     height: 50px;
+    letter-spacing: 1px;
+    width: 200px;
+    text-transform: uppercase;
+    transition: transform 80ms ease-in;
+    position: relative;
+    left: 170px;
+
+}
+
+#login {
+    color:#FF416C;
+    text-decoration: none;
+    position: relative;
+    bottom: 60px;
+}
+
+#mostrar {
+    position: relative;
+    left: 230px;
+    bottom: 35px;
+    color:#FF416C;
+    cursor: pointer;
+}
+
+section {
+    background-color: white;
+    border-radius: 10px;
+    width: 500px;
+    padding: 20px;
+    box-shadow: 5px 5px 10px;
+    margin: 0px auto;
+    position: relative;
+    justify-content: center;
+    right: 660px;
+    height: 475px;
+
+}

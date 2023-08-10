@@ -163,8 +163,7 @@ $result = $conexao->query($sql);
                     $data = explode(' ', $user_data['dta_criacao']);
 
                     $hora = $data[1];
-                    //Espaço na hora de imprimir
-                    $space = ' ';
+                    
 
                     $ss = $user_data['senha'];
                     $sop = $user_data['sophia'];
@@ -181,7 +180,7 @@ $result = $conexao->query($sql);
                     echo "<td>"."<button id='email' class='copiar' onclick='CopiarEmail()'>".$user_data['email']."</button>"."</td>";
                     echo "<td><input type='password' id='oculta-input' readonly value='$ss'></td>";
                     echo "<td><input type='password' id='oculta-input' readonly value='$sop'></td>";
-                    echo "<td>". $dataCorreta .$space . substr($hora, 0, 5) ."</td>";
+                    echo "<td>". $dataCorreta . " - " . substr($hora, 0, 5) ."</td>";
                 }
 
                 ?>

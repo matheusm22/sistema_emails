@@ -5,7 +5,7 @@
    setcookie('token');
    
    // Criar a mensagem de sucesso e atribuir para variável global
-   $_SESSION['msg'] = "<p style='color: green;'>Deslogado com sucesso!</p>";
+   $_SESSION['msg'] = "<p style='color: white;'>Deslogado com sucesso!</p>";
    
    
    // Redireciona o o usuário para o arquivo index.php

@@ -102,11 +102,12 @@ $result = $conexao->query($sql);
     <br>
     <div class="d-flex">
         <a href="sair.php" class="btn btn-lg btn-danger  me-2">Sair</a> &nbsp; &nbsp;
-        <a href="inserir.php" class="btn btn-lg btn-info">Adicionar</a>
+        <a href="inserir.php" class="btn  btn-info">Adicionar registros +</a> &nbsp; &nbsp;
+        <a href="cadastro.php" class="btn  btn-warning">Adicionar usuários +</a>
     </div>
 
     <div class="box-search">
-        <input type="search" class="form-control w-25" placeholder="Pesquisar" id="pesquisar">
+        <input type="search" class="form-control w-25" placeholder="Pesquisar" autofocus id="pesquisar">
         <button onclick="searchData()" class="btn btn-primary">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
@@ -159,8 +160,6 @@ $result = $conexao->query($sql);
                     $data = explode(' ', $user_data['dta_criacao']);
 
                     $hora = $data[1];
-                    //Espaço na hora de imprimir
-                    $space = ' ';
 
                     //'2023-05-26'  Transforma a data em um array também 
                     $data_criacao = explode('-',  $data[0]);
@@ -176,8 +175,8 @@ $result = $conexao->query($sql);
                       echo "<td>"."<button id='sophia' class='copiar' onclick='CopiarSophia()'>".$sop."</button>"."</td>";
                     echo "<td>" . $user_data['setor'] . "</td>";
                     echo "<td>" . $user_data['ativo'] . "</td>";
-                    echo "<td>" . $data_atualiza . $space . substr($hora1, 0, 5) . "</td>";
-                    echo "<td>" . $data_criacao . $space . substr($hora, 0, 5) . "</td>";
+                    echo "<td>" . $data_atualiza . " - " . substr($hora1, 0, 5) . "</td>";
+                    echo "<td>" . $data_criacao .  " - " . substr($hora, 0, 5) . "</td>";
                     echo "<td>
                         <a class='btn btn-info' href='edita.php?id=$user_data[id]'>
                         <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-pencil' viewBox='0 0 16 16'>

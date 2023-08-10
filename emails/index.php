@@ -87,16 +87,16 @@ if (!empty($_POST['submit'])) {
     } else {
       // Criar a mensagem de erro e atribuir para variável global "msg"  -- ERRO INPUT EM BRANCO
       $_SESSION['msg'] = "<p style='color: #f00;'>Erro: Usuário ou senha inválida!</p>";
-  //     echo "<script>setTimeout(function() {
-  //     window.location.href = '/emails/index.php';
-  // }, 1200); </script>";
+      echo "<script>setTimeout(function() {
+      window.location.href = '/emails/index.php';
+  }, 1200); </script>";
     }
   } else {
     // Criar a mensagem de erro e atribuir para variável global "msg" -- ERRO USUARIO INVÁLIDO
     $_SESSION['msg'] = "<p style='color: #f00;'>Erro: Usuário ou senha inválida!</p>";
-  //   echo "<script>setTimeout(function() {
-  //     window.location.href = '/emails/index.php';
-  // }, 1200); </script>";
+    echo "<script>setTimeout(function() {
+      window.location.href = '/emails/index.php';
+  }, 1200); </script>";
   }
 }
 
@@ -127,7 +127,7 @@ if (isset($_SESSION['msg'])) {
     <div class="container py-5 h-100">
       <div class="row d-flex align-items-center justify-content-center h-100">
         <div class="col-md-8 col-lg-7 col-xl-6">
-          <img src="/meet/css/econet.webp" class="img-fluid" alt="logo econet">
+          <img src="logo-nova.png" class="img-fluid" alt="logo econet">
         </div>
         <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
           <!-- Início do formulário de login -->
@@ -156,9 +156,9 @@ if (isset($_SESSION['msg'])) {
               <img src="/meet/css/eye-off.svg" id="mostrar">
               <br>
 
-              <input type="submit" name="submit"  id='acessar' class="btn btn-outline-success w-25" value="Acessar"> 
+              <input type="submit" name="submit"  id='acessar' class="btn btn-success w-25" value="Acessar"> 
           </form>
-          <a href="update.php" class="btn btn-outline-primary" id='esq_senha'>Esqueceu a senha?</a>
+          <a href="update.php"  id='esq_senha'>Esqueceu a senha?</a>
           <br>
           <!-- Fim do formulário de login -->
         </div>
