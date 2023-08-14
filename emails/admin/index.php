@@ -63,7 +63,7 @@ $result = $conexao->query($sql);
         }
 
         .table-bg {
-            background-image: linear-gradient(to right, #D51037 15%, #E34E6C, #F074B6);
+            background-image: linear-gradient(to right,  #008e9d 40%,  #4bbc42);
             border-radius: 15px 15px 15px 15px;
         }
 
